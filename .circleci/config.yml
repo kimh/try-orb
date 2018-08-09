@@ -1,17 +1,30 @@
-commands:
-  sayhello:
-    description: "A very simple command for demonstration purposes"
-    parameters:
-      to:
-        type: string
-        default: "Hello World"
-    steps:
-      - run: echo << parameters.to >>
+#commands:
+#  sayhello:
+#    description: "A very simple command for demonstration purposes"
+#    parameters:
+#      to:
+#        type: string
+#        default: "Hello World"
+#    steps:
+#      - run: echo << parameters.to >>
+#
+#jobs:
+#  build:
+#    docker:
+#      - image: "circleci/node:9.6.1"
+#    steps:
+#      - sayhello:
+#          to: "Lev"
+
+version: 2
+orbs:
+  s3: circleci/aws-s3@1
 
 jobs:
-  build:
-    docker:
-      - image: "circleci/node:9.6.1"
+  deploy:
+    executor: s3/default
     steps:
-      - sayhello:
-          to: "Lev"
+      - s3/deploy:
+          from: "somepath/somefile"
+          to: $S3BUCKETURI
+          overwrite: false
