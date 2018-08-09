@@ -18,5 +18,4 @@ jobs:
       - run:
           name: Greeting
           command: echo Hello, world.
-      - sayhello:
-          to: "me"
+      - sayhello
