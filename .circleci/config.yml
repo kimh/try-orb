@@ -18,5 +18,4 @@ orbs:
           - dospecialthings
 
 workflows:
-  main:
-    - my-orb/myjob
+  main: my-orb/myjob
