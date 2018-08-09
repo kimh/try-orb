@@ -1,23 +1,33 @@
-executors:
-  my-executor:
-    docker:
-      - image:  "circleci/node:9.6.1"
-
-commands:
-  sayhello:
-    description: "A very simple command for demonstration purposes"
-    parameters:
-      to:
-        type: string
-        default: "Hello World"
-    steps:
-      - run: echo << parameters.to >>
-
-jobs:
-  build:
-    executor: my-executor
-    steps:
-      - sayhello:
-          to: "Lev"
-
 version: 2.1
+
+orbs:
+  myorb: mynamespace/myorb@1.0.1
+
+workflows:
+  workflow:
+    jobs:
+      - myorb/myjob:
+          preinstall-foo: false
+      - myorb/myjob:
+          preinstall-foo: true
+#executors:
+#  my-executor:
+#    docker:
+#      - image:  "circleci/node:9.6.1"
+#
+#commands:
+#  sayhello:
+#    description: "A very simple command for demonstration purposes"
+#    parameters:
+#      to:
+#        type: string
+#        default: "Hello World"
+#    steps:
+#      - run: echo << parameters.to >>
+#
+#jobs:
+#  build:
+#    executor: my-executor
+#    steps:
+#      - sayhello:
+#          to: "Lev"
