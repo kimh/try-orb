@@ -1,21 +1,48 @@
 commands:
-  sayhello:
-    description: "A very simple command for demonstration purposes"
+  s3sync:
     parameters:
+      from:
+        type: string
       to:
         type: string
-        default: "Hello World"
+      overwrite:
+        default: false
+        type: boolean
     steps:
-      - run: echo << parameters.to >>
-
-version: 2
-jobs:
-  build:
-    docker:
-      - image: debian:stretch
-    steps:
-      - checkout
       - run:
-          name: Greeting
-          command: echo Hello, world.
-      - sayhello
+          name: Deploy to S3
+          command: "aws s3 sync << parameters.from >> << parameters.to >><<# parameters.overwrite >> --delete<</ parameters.overwrite >>"
+executors:
+  aws:
+    docker:
+      - image: cibuilds/aws:1.15
+jobs:
+  deploy2s3:
+    executor: aws
+    steps:
+      - s3sync:
+          from: .
+          to: "s3://mybucket_uri"
+          overwrite: true
+
+#commands:
+#  sayhello:
+#    description: "A very simple command for demonstration purposes"
+#    parameters:
+#      to:
+#        type: string
+#        default: "Hello World"
+#    steps:
+#      - run: echo << parameters.to >>
+#
+#version: 2
+#jobs:
+#  build:
+#    docker:
+#      - image: debian:stretch
+#    steps:
+#      - checkout
+#      - run:
+#          name: Greeting
+#          command: echo Hello, world.
+#      - sayhello
