@@ -12,6 +12,8 @@ jobs:
   build:
     docker:
       - image: "circleci/node:9.6.1"
+    pre-steps:
+      - echo "pre"
     steps:
       - sayhello:
           to: "Lev"
