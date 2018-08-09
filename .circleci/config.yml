@@ -1,8 +1,6 @@
 version: 2.1
-
-version: 2
 orbs:
-  s3: circleci/aws-s3@1.4.2
+  s3: circleci/aws-s3@1
 
 jobs:
   deploy:
