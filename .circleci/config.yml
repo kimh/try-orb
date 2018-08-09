@@ -1,3 +1,8 @@
+executors:
+  my-executor:
+    docker:
+      - image:  "circleci/node:9.6.1"
+
 commands:
   sayhello:
     description: "A very simple command for demonstration purposes"
@@ -10,10 +15,7 @@ commands:
 
 jobs:
   build:
-    docker:
-      - image: "circleci/node:9.6.1"
-    pre-steps:
-      - echo "pre"
+    executor: my-executor
     steps:
       - sayhello:
           to: "Lev"
